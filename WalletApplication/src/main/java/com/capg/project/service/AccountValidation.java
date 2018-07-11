@@ -1,9 +1,11 @@
 package com.capg.project.service;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.capg.project.bean.AccountDetails;
+import com.capg.project.dao.AccountDAO;
 
 public class AccountValidation {
 	
@@ -66,15 +68,22 @@ public class AccountValidation {
 				return false;
 		}
 		
-		public boolean validateLogin(String username, String password)
+		public AccountDetails validateLogin(String username, String password)
 		{
-			AccountDetails d = new AccountDetails();
-			if((d.getUsername()==username) && (d.getPassword() == password))
-			return true;
-			else 
-				return false;
+			
+			//AccountDetails d = new AccountDetails();
+			//System.out.println(d.getPassword());
+			//System.out.println(d.getUsername());
+			List<AccountDetails> list = AccountDAO.getList();
+			for (AccountDetails d : list)
+			{
+			if((username.equals(d.getUsername()) && password.equals(d.getPassword())))
 		
+			return d; 
+					
 	}
+			return null;
+			
 	
-
+		}
 }

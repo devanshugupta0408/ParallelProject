@@ -14,7 +14,7 @@ public class AccountDAO implements IAccountDAO {
 
 	boolean flag = false;
 	Scanner sc = new Scanner(System.in);
-	List<AccountDetails> list = new ArrayList<AccountDetails>();
+	static List<AccountDetails> list = new ArrayList<AccountDetails>();
 
 	public boolean createAccount(AccountDetails account)
 
@@ -23,19 +23,30 @@ public class AccountDAO implements IAccountDAO {
 		return flag;
 	}
 	public AccountDetails deposit(int deposit,AccountDetails ad)
+	{ 
 
-	{ ad.setBalance(ad.getBalance() + deposit);
+	  ad.setBalance(ad.getBalance() + deposit);
 		return ad;
 	}
-	
-	public List<AccountDetails> showBalance() {
-		
-		for (AccountDetails ac : list) {
-				System.out.println(ac);
-			}
-			
+	public static List<AccountDetails> getList() {
 
 		return list;
+
+	}
+	public AccountDetails showBalance(AccountDetails AD) {
+	
+		
+		return AD;
+	}
+	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad) {
+
+		int withdrawn = ad.getBalance() - withdraw;
+		if (withdrawn >= 0) {
+			ad.setBalance(withdrawn);
+			return ad;
+		
+		}
+		return null;
 	}
 
 public boolean FundTransfer() {

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-import org.junit.validator.ValidateWith;
+
 
 import com.capg.project.bean.AccountDetails;
 import com.capg.project.service.AccountService;
@@ -102,26 +102,60 @@ public class Client {
 				}
 				break;
 			case 2 :
-				service.showBalance();
+				System.out.println("Enter username1");
+				String username1 = br.readLine();
+				System.out.println("Enter password1");
+				String password1 = br.readLine();
+				
+				account = valid.validateLogin(username1, password1);
+				if(account!=null)
+					System.out.println(account.getBalance());
 				break;		
 				
 			case 3: 
 			System.out.println("Enter username");
-			String username1 = br.readLine();
+			String username2 = br.readLine();
 			System.out.println("Enter password");
-			String password1 = br.readLine();
-			boolean condition  = valid.validateLogin(username1, password1);
-			if(condition == true)
-
+			String password2 = br.readLine();
+		account  = valid.validateLogin(username2, password2);
+			
+			if(account!=null)
 			{
+			
 				System.out.println("Enter amount to deposit");
 				int balance = sc.nextInt();
+			//	if(balance<0)
+				//	System.out.println("Invalid Input");
 				
-				
-				
-				
+			//	else
+				service.deposit(balance, account);
 			}
 			
+			break;
+			
+			case 4 :
+				System.out.println("Enter username");
+				String username3 = br.readLine();
+				System.out.println("Enter password");
+				String password3 = br.readLine();
+			account  = valid.validateLogin(username3, password3);
+				
+				if(account!=null)
+				{ System.out.println("Enter amount to withdraw");
+				int with = sc.nextInt();
+				if (service.withdrawBalance(with, account) != null) {
+					System.out.println(account);
+					System.out.println("♠• Amount Successfuly Withdrawn. •♠");
+					break;
+				} else if (service.withdrawBalance(with, account) == null) {
+					System.err.println("Insufficient Funds!");
+					break;
+				}
+
+			} else if (account == null) {
+				System.err.println("Incorrect Username or Password!");
+			}
+				break;
 			//else
 				//System.out.println("Invalid details");
 			//System.out.println("Your balance is " + account.getBalance());

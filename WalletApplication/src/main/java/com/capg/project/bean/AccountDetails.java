@@ -76,9 +76,7 @@ public class AccountDetails {
 	}
 	@Override
 	public String toString() {
-		return "AccountDetails [customerName=" + customerName + ", customerEmail=" + customerEmail + ", gender="
-				+ gender + ", phoneNumber=" + phoneNumber + ", age=" + age + ", dob=" + dob + ", accountNumber="
-				+ accountNumber + ", username=" + username + ", password=" + password + ", balance=" + balance + "]";
+		return " balance=" + balance ;
 	}
 	
 

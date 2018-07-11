@@ -14,13 +14,15 @@ public class AccountService implements IAccountService {
 		return dao.createAccount(account);
 	}
 
+
+	
 	public AccountDetails deposit(int deposit,AccountDetails ad) {
 		return dao.deposit(deposit, ad);
 		}
 	
-	public List<AccountDetails> showBalance() {
+	public AccountDetails showBalance(AccountDetails AD) {
 
-		return dao.showBalance();
+		return dao.showBalance(AD);
 
 }
 
