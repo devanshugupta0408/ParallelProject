@@ -16,8 +16,8 @@ public class AccountService implements IAccountService {
 
 
 	
-	public AccountDetails deposit(int deposit,AccountDetails ad) {
-		return dao.deposit(deposit, ad);
+	public AccountDetails depositBalance(int deposit,AccountDetails ad) {
+		return dao.depositBalance(deposit, ad);
 		}
 	
 	public AccountDetails showBalance(AccountDetails AD) {
@@ -31,8 +31,8 @@ public class AccountService implements IAccountService {
 		return null;
 	}
 
-	public AccountDetails withdrawBalance(int i, AccountDetails ad) {
-		// TODO Auto-generated method stub
-		return null;
+	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad) {
+		return dao.withdrawBalance(withdraw, ad);
 	}
+	
 }

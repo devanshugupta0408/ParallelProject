@@ -74,7 +74,7 @@ public class AccountValidation {
 			//AccountDetails d = new AccountDetails();
 			//System.out.println(d.getPassword());
 			//System.out.println(d.getUsername());
-			List<AccountDetails> list = AccountDAO.getList();
+			List<AccountDetails> list = AccountDAO.List();
 			for (AccountDetails d : list)
 			{
 			if((username.equals(d.getUsername()) && password.equals(d.getPassword())))

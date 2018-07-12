@@ -21,7 +21,7 @@ public class AccountDAOTest extends TestCase {
 	}
 
 	public void testDeposite() {
-		assertEquals(true,dao.deposit(110, ad));
+		assertEquals(true,dao.depositBalance(110, ad));
 		
 	}
 

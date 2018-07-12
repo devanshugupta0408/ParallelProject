@@ -22,24 +22,23 @@ public class AccountDAO implements IAccountDAO {
 		flag = list.add(account);
 		return flag;
 	}
-	public AccountDetails deposit(int deposit,AccountDetails ad)
+	public AccountDetails depositBalance(int deposit,AccountDetails ad)
 	{ 
 
 	  ad.setBalance(ad.getBalance() + deposit);
 		return ad;
 	}
-	public static List<AccountDetails> getList() {
+	public static List<AccountDetails> List() {
 
 		return list;
 
 	}
 	public AccountDetails showBalance(AccountDetails AD) {
 	
-		
 		return AD;
 	}
 	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad) {
-
+	
 		int withdrawn = ad.getBalance() - withdraw;
 		if (withdrawn >= 0) {
 			ad.setBalance(withdrawn);

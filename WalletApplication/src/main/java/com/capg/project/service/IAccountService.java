@@ -1,13 +1,12 @@
 package com.capg.project.service;
 
-import java.util.List;
-
 import com.capg.project.bean.AccountDetails;
 
 public interface IAccountService {
 	public boolean createAccount(AccountDetails account);
 	
-	public AccountDetails deposit(int deposit,AccountDetails ad);
+	public AccountDetails depositBalance(int deposit,AccountDetails ad);
 	public AccountDetails showBalance(AccountDetails AD);
+	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad);
 
 }

@@ -15,7 +15,7 @@ public class AccountServiceTest extends TestCase {
 		}
 
 		public void testDeposite() {
-			assertEquals(true,as.deposit(110, ad));
+			assertEquals(true,as.depositBalance(110, ad));
 			
 		}
 
