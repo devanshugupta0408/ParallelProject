@@ -34,5 +34,7 @@ public class AccountService implements IAccountService {
 	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad) {
 		return dao.withdrawBalance(withdraw, ad);
 	}
-	
+	public AccountDetails FundTransfer(long accountNumber, AccountDetails ad) {
+		return dao.FundTransfer(accountNumber, ad);
+	}
 }

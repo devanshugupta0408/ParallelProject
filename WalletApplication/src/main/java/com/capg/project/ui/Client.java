@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import com.capg.project.bean.AccountDetails;
+import com.capg.project.bean.CustomerDetails;
 import com.capg.project.service.AccountService;
 import com.capg.project.service.AccountValidation;
 
@@ -21,6 +22,7 @@ public class Client {
 
 		while (true) {
 			AccountDetails account = new AccountDetails();
+			CustomerDetails customer = new CustomerDetails();
 
 			System.out.println("Payment Wallet Application");
 			System.out.println("1. Create account");
@@ -36,7 +38,7 @@ public class Client {
 					System.out.println("Enter your name");
 
 					String customerName = br.readLine();
-					account.setCustomerName(customerName);
+					customer.setCustomerName(customerName);
 
 					System.out.println("Enter age");
 					int age = sc.nextInt();
@@ -58,7 +60,7 @@ public class Client {
 
 					System.out.println("Enter your email id");
 					String customerEmail = br.readLine();
-					account.setCustomerEmail(customerEmail);
+					customer.setCustomerEmail(customerEmail);
 					boolean iscustomerEmail = valid.validatecustomerEmail(customerEmail);
 					if (!iscustomerEmail)
 						System.out.println("Invalid Input");
@@ -79,11 +81,12 @@ public class Client {
 					if (!ispassword)
 						System.out.println("Invalid input");
 
-					account.setAge(age);
-					account.setGender(gender);
-					account.setPhoneNumber(phoneNumber);
-					account.setDob(dob);
+					customer.setAge(age);
+					customer.setGender(gender);
+					customer.setPhoneNumber(phoneNumber);
+					customer.setDob(dob);
 					account.setAccountNumber(accountNumber);
+					account.setCustomerDetails(customer);
 
 					if (isphoneNumber && iscustomerEmail && ispassword && isusername) {
 						b = service.createAccount(account);
@@ -103,13 +106,13 @@ public class Client {
 					account = valid.validateLogin(username1, password1);
 					while (account != null) {
 						System.out.println("*****WELCOME*****");
-						System.out.println("Name: " + account.getCustomerName());
+						System.out.println("Name: " + account.getCustomerDetails().getCustomerName());
 						System.out.println("Account Number: " + account.getAccountNumber());
 						System.out.println("1.Show Balance");
 						System.out.println("2.Deposit");
 						System.out.println("3.Withdraw");
 						System.out.println("4. Fund Transfer");
-						System.out.println("5.Exit");
+						System.out.println("5.Logout");
 
 						int options = sc.nextInt();
 						switch (options) {
@@ -144,6 +147,12 @@ public class Client {
 							break;
 
 						case 4:
+							System.out.println("Enter the account number to which you want to Trasnfer money");
+							accountNumber = sc.nextLong();
+							if(accountNumber==account.getAccountNumber())
+								System.out.println("Donot Enter your account number");
+							service.FundTransfer(accountNumber, account);
+							
 							break;
 						case 5:
 							account = null;

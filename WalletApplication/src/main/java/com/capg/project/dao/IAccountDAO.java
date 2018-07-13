@@ -1,6 +1,7 @@
 package com.capg.project.dao;
 
 import com.capg.project.bean.AccountDetails;
+import com.capg.project.bean.CustomerDetails;
 
 
 public interface IAccountDAO {
@@ -8,4 +9,5 @@ public interface IAccountDAO {
 	public AccountDetails depositBalance(int deposit,AccountDetails ad);
 	public AccountDetails showBalance(AccountDetails AD);
 	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad);
+	public AccountDetails FundTransfer(long accountNumber, AccountDetails ad);
 }

@@ -8,5 +8,5 @@ public interface IAccountService {
 	public AccountDetails depositBalance(int deposit,AccountDetails ad);
 	public AccountDetails showBalance(AccountDetails AD);
 	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad);
-
+	public AccountDetails FundTransfer(long accountNumber, AccountDetails ad);
 }

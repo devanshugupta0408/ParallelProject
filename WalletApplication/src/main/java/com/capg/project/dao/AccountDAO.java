@@ -20,6 +20,7 @@ public class AccountDAO implements IAccountDAO {
 
 	{
 		flag = list.add(account);
+		
 		return flag;
 	}
 	public AccountDetails depositBalance(int deposit,AccountDetails ad)
@@ -28,11 +29,7 @@ public class AccountDAO implements IAccountDAO {
 	  ad.setBalance(ad.getBalance() + deposit);
 		return ad;
 	}
-	public static List<AccountDetails> List() {
-
-		return list;
-
-	}
+	
 	public AccountDetails showBalance(AccountDetails AD) {
 	
 		return AD;
@@ -48,10 +45,35 @@ public class AccountDAO implements IAccountDAO {
 		return null;
 	}
 
-public boolean FundTransfer() {
-	return flag;}
-public AccountDetails withdrawBalance(double withdraw, AccountDetails ad) {
-	return ad;
+public AccountDetails FundTransfer(long accountNumber, AccountDetails ad) {
 	
+	System.out.println("Enter amount you want to transfer");
+	int transferAmount = sc.nextInt();
+	int balance = ad.getBalance();
+	int userBalance = ad.getBalance();
+	for(AccountDetails fund : list)
+	{
+		if(fund.getAccountNumber() == accountNumber)
+		{
+			if(userBalance >= transferAmount)
+			{
+				fund.setBalance(fund.getBalance() + transferAmount);
+				ad.setBalance(userBalance-transferAmount);
+				return fund;
+			}
+			else
+				System.out.println("insufficient funds");
+			
+		}
+	}
+	
+	return null;}
+
+	
+
+public static List<AccountDetails> List() {
+
+	return list;
+
 }
 }
