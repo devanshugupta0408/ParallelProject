@@ -1,6 +1,6 @@
 package com.capg.project.bean;
 
-
+import java.util.List;
 
 public class AccountDetails {
 
@@ -10,7 +10,14 @@ public class AccountDetails {
 	private String password;
 	private int balance;
 	private CustomerDetails customerDetails;
-	
+	private List<String> trans;
+
+	public List<String> getTrans() {
+		return trans;
+	}
+	public void setTrans(List<String> trans) {
+		this.trans = trans;
+	}
 	public CustomerDetails getCustomerDetails() {
 		return customerDetails;
 	}
@@ -44,7 +51,7 @@ public class AccountDetails {
 	}
 	@Override
 	public String toString() {
-		return " balance=" + balance ;
+		return "trans";
 	}
 	
 

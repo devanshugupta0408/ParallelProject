@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.capg.project.bean.AccountDetails;
@@ -13,14 +15,17 @@ import com.capg.project.service.AccountService;
 import com.capg.project.service.AccountValidation;
 
 public class Client {
+	static boolean k;
 	static boolean b;
-
 	public static void main(String[] args) {
 		AccountValidation valid = new AccountValidation();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		AccountService service = new AccountService();
 
 		while (true) {
+			
+			List<String> list = new ArrayList<String>();
+			
 			AccountDetails account = new AccountDetails();
 			CustomerDetails customer = new CustomerDetails();
 
@@ -37,7 +42,12 @@ public class Client {
 				case 1:
 					System.out.println("Enter your name");
 
-					String customerName = br.readLine();
+					String customerName = br.readLine();customer.setCustomerName(customerName);
+					boolean iscustomerName = valid.validatecustomerName(customerName);
+					if(!iscustomerName) {
+						System.out.println("Invalid. Try again");
+						continue;
+					}
 					customer.setCustomerName(customerName);
 
 					System.out.println("Enter age");
@@ -46,12 +56,11 @@ public class Client {
 					System.out.println("Mobile Number");
 					String phoneNumber = br.readLine();
 					boolean isphoneNumber = valid.validatephoneNumber(phoneNumber);
+					if(!isphoneNumber) {
+						System.out.println("Invalid. Try again");
+						continue;
+					}
 
-					DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-					System.out.println("Enter your DOB");
-					Scanner sc1 = new Scanner(System.in);
-					String date1 = sc1.next();
-					LocalDate dob = LocalDate.parse(date1, date);
 
 					System.out.println("Enter Gender : Male/Female/M/F/Others");
 					String gender = br.readLine();
@@ -63,7 +72,10 @@ public class Client {
 					customer.setCustomerEmail(customerEmail);
 					boolean iscustomerEmail = valid.validatecustomerEmail(customerEmail);
 					if (!iscustomerEmail)
-						System.out.println("Invalid Input");
+					{
+						System.out.println("Invalid. Try again");
+						continue;
+					}
 
 					System.out.println(
 							"Enter username : use aplabets and characters from a-z, 0-9, underscore _, hyphen-");
@@ -71,7 +83,11 @@ public class Client {
 					account.setUsername(username);
 					boolean isusername = valid.validateusername(username);
 					if (!isusername)
-						System.out.println("Invalid Input");
+					{
+						System.out.println("Invalid. Try again");
+						continue;
+					}
+
 
 					System.out.println(
 							"Enter password : use aplabets and characters from a-z, 0-9. \n It should have atleast 1 Upper case character, 1 Lower case character, 1 special character and 1 digit. MIN LENGTH IS 6 MAX LENGTH IS 20 ");
@@ -79,21 +95,37 @@ public class Client {
 					account.setPassword(password);
 					boolean ispassword = valid.validatepassword(password);
 					if (!ispassword)
-						System.out.println("Invalid input");
+					{
+						System.out.println("Invalid. Try again");
+						continue;
+					}
 
+					System.out.println("Deposit Rs : 500 or above as account minimum limit is Rs500");
+					int bal = sc.nextInt();
+					while(true) {
+					if(bal<500)
+					System.out.println("Minimum bal. should be 500");
+
+					else
+						break;
+					}
 					customer.setAge(age);
 					customer.setGender(gender);
 					customer.setPhoneNumber(phoneNumber);
-					customer.setDob(dob);
 					account.setAccountNumber(accountNumber);
 					account.setCustomerDetails(customer);
+					account.setBalance(500);
+				
+					account.setTrans(list);
 
 					if (isphoneNumber && iscustomerEmail && ispassword && isusername) {
+						
 						b = service.createAccount(account);
 						System.out.println("Account Created Successfully");
+						
 						System.out.println("Your account number is " + accountNumber);
-
-					} else {
+					}
+					else {
 						System.out.println("Invalid");
 					}
 					break;
@@ -112,7 +144,8 @@ public class Client {
 						System.out.println("2.Deposit");
 						System.out.println("3.Withdraw");
 						System.out.println("4. Fund Transfer");
-						System.out.println("5.Logout");
+						System.out.println("5.Print Transaction");
+						System.out.println("6. Logout");
 
 						int options = sc.nextInt();
 						switch (options) {
@@ -136,13 +169,12 @@ public class Client {
 							System.out.println("Enter amount to withdraw");
 							int withdraw = sc.nextInt();
 
-							if (service.withdrawBalance(withdraw, account) != null) {
-								System.out.println(account);
+							if (service.withdrawBalance(withdraw, account) != false) {
+								
 								System.out.println("Amount Successfuly Withdrawn");
-								break;
-							} else if (service.withdrawBalance(withdraw, account) == null) {
+								
+							} else  {
 								System.err.println("Insufficient Funds!");
-								break;
 							}
 							break;
 
@@ -155,6 +187,11 @@ public class Client {
 							
 							break;
 						case 5:
+							
+							service.PrintTransaction(account);
+							break;
+							
+						case 6:
 							account = null;
 						}
 					}

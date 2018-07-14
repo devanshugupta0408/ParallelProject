@@ -25,7 +25,7 @@ public class AccountServiceTest extends TestCase {
 		}
 
 		public void testTransfer() {
-		assertEquals(false, as.FundTransfer());
+		assertEquals(false, as.FundTransfer(0, ad));
 		
 		}
 

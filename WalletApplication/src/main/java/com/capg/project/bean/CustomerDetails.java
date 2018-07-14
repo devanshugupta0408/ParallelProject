@@ -2,6 +2,7 @@ package com.capg.project.bean;
 
 import java.time.LocalDate;
 
+
 public class CustomerDetails {
 	private String customerName;
 	private String customerEmail;
@@ -9,6 +10,9 @@ public class CustomerDetails {
 	private String phoneNumber;
 	private int age;
 	private LocalDate dob;
+
+
+	
 	public String getCustomerName() {
 		return customerName;
 	}

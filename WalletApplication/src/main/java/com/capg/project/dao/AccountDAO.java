@@ -1,5 +1,6 @@
 package com.capg.project.dao;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,9 +13,10 @@ import com.capg.project.bean.AccountDetails;
 public class AccountDAO implements IAccountDAO {
 
 
+	
 	boolean flag = false;
 	Scanner sc = new Scanner(System.in);
-	static List<AccountDetails> list = new ArrayList<AccountDetails>();
+	public static List<AccountDetails> list = new ArrayList<AccountDetails>();
 
 	public boolean createAccount(AccountDetails account)
 
@@ -23,34 +25,51 @@ public class AccountDAO implements IAccountDAO {
 		
 		return flag;
 	}
-	public AccountDetails depositBalance(int deposit,AccountDetails ad)
+	public boolean depositBalance(int deposit,AccountDetails account)
 	{ 
-
-	  ad.setBalance(ad.getBalance() + deposit);
-		return ad;
-	}
-	
-	public AccountDetails showBalance(AccountDetails AD) {
-	
-		return AD;
-	}
-	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad) {
-	
-		int withdrawn = ad.getBalance() - withdraw;
-		if (withdrawn >= 0) {
-			ad.setBalance(withdrawn);
-			return ad;
+		int bal = account.getBalance();
+		account.setBalance( bal + deposit);
 		
+	  LocalDateTime d=LocalDateTime.now();
+	  
+	  String s="Deposited Rs:"+ deposit + " on " + d;
+	  account.getTrans().add(s);
+		return true;
+	}
+	
+	public void showBalance(AccountDetails account) {
+		
+		System.out.println(account.getBalance());
+		
+	}
+	public boolean withdrawBalance(int withdraw,AccountDetails account) {
+	
+		int bal = account.getBalance();
+		if(bal<500)
+		
+			System.out.println("Account balance cannot be less tha 500");
+		
+		else {
+		int withdrawn = bal - withdraw;
+		if (withdrawn >= 500) {
+			account.setBalance(withdrawn);
+			LocalDateTime d=LocalDateTime.now();
+			 String s="Withdrawn Rs:" +  withdraw + " on "+ d;
+			  account.getTrans().add(s);
+		return true;
 		}
-		return null;
+		else
+			account.setBalance(bal);
+		}
+		return false;
 	}
 
-public AccountDetails FundTransfer(long accountNumber, AccountDetails ad) {
+public boolean FundTransfer(long accountNumber, AccountDetails account) {
 	
 	System.out.println("Enter amount you want to transfer");
 	int transferAmount = sc.nextInt();
-	int balance = ad.getBalance();
-	int userBalance = ad.getBalance();
+	
+	int userBalance = account.getBalance();
 	for(AccountDetails fund : list)
 	{
 		if(fund.getAccountNumber() == accountNumber)
@@ -58,22 +77,33 @@ public AccountDetails FundTransfer(long accountNumber, AccountDetails ad) {
 			if(userBalance >= transferAmount)
 			{
 				fund.setBalance(fund.getBalance() + transferAmount);
-				ad.setBalance(userBalance-transferAmount);
-				return fund;
+				account.setBalance(userBalance-transferAmount);
+				LocalDateTime d=LocalDateTime.now();
+				 String s="Transfered Rs:" + transferAmount+ " on " + d+  " to "  +accountNumber;
+				  account.getTrans().add(s);
+				  
+				  String s1="Received Rs:" + transferAmount + " on "+ d+ " from " + account.getAccountNumber();
+				  fund.getTrans().add(s1);
+				return true;
 			}
 			else
-				System.out.println("insufficient funds");
+				System.out.println("insufficient funds\n");
 			
 		}
 	}
 	
-	return null;}
+	return false;}
 
 	
 
-public static List<AccountDetails> List() {
+/*public static List<AccountDetails> List() {
 
 	return list;
 
+}*/
+public void PrintTransaction(AccountDetails account) {
+	
+	System.out.println(account.getTrans());
+	
 }
 }

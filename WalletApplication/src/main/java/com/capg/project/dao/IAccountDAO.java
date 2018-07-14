@@ -1,13 +1,14 @@
 package com.capg.project.dao;
 
+
 import com.capg.project.bean.AccountDetails;
-import com.capg.project.bean.CustomerDetails;
 
 
 public interface IAccountDAO {
 	public boolean createAccount(AccountDetails account);
-	public AccountDetails depositBalance(int deposit,AccountDetails ad);
-	public AccountDetails showBalance(AccountDetails AD);
-	public AccountDetails withdrawBalance(int withdraw,AccountDetails ad);
-	public AccountDetails FundTransfer(long accountNumber, AccountDetails ad);
+	public boolean depositBalance(int deposit,AccountDetails ad);
+	public void showBalance(AccountDetails AD);
+	public boolean withdrawBalance(int withdraw,AccountDetails ad);
+	public boolean FundTransfer(long accountNumber, AccountDetails ad);
+	public void PrintTransaction(AccountDetails ad);
 }
