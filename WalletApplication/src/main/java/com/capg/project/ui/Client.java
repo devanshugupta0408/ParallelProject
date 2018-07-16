@@ -3,8 +3,6 @@ package com.capg.project.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,15 +15,16 @@ import com.capg.project.service.AccountValidation;
 public class Client {
 	static boolean k;
 	static boolean b;
+
 	public static void main(String[] args) {
 		AccountValidation valid = new AccountValidation();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		AccountService service = new AccountService();
 
 		while (true) {
-			
+
 			List<String> list = new ArrayList<String>();
-			
+
 			AccountDetails account = new AccountDetails();
 			CustomerDetails customer = new CustomerDetails();
 
@@ -42,10 +41,11 @@ public class Client {
 				case 1:
 					System.out.println("Enter your name");
 
-					String customerName = br.readLine();customer.setCustomerName(customerName);
+					String customerName = br.readLine();
+					customer.setCustomerName(customerName);
 					boolean iscustomerName = valid.validatecustomerName(customerName);
-					if(!iscustomerName) {
-						System.out.println("Invalid. Try again");
+					if (!iscustomerName) {
+						System.out.println("Invalid input");
 						continue;
 					}
 					customer.setCustomerName(customerName);
@@ -56,14 +56,18 @@ public class Client {
 					System.out.println("Mobile Number");
 					String phoneNumber = br.readLine();
 					boolean isphoneNumber = valid.validatephoneNumber(phoneNumber);
-					if(!isphoneNumber) {
-						System.out.println("Invalid. Try again");
+					if (!isphoneNumber) {
+						System.out.println("Invalid input");
 						continue;
 					}
 
-
 					System.out.println("Enter Gender : Male/Female/M/F/Others");
 					String gender = br.readLine();
+					boolean isgender = valid.validategender(gender);
+					if (!isgender) {
+						System.out.println("Invalid input");
+						continue;
+					}
 
 					long accountNumber = (long) (Math.random() * 100000 + 99999);
 
@@ -71,9 +75,8 @@ public class Client {
 					String customerEmail = br.readLine();
 					customer.setCustomerEmail(customerEmail);
 					boolean iscustomerEmail = valid.validatecustomerEmail(customerEmail);
-					if (!iscustomerEmail)
-					{
-						System.out.println("Invalid. Try again");
+					if (!iscustomerEmail) {
+						System.out.println("Invalid input");
 						continue;
 					}
 
@@ -82,50 +85,49 @@ public class Client {
 					String username = br.readLine();
 					account.setUsername(username);
 					boolean isusername = valid.validateusername(username);
-					if (!isusername)
-					{
-						System.out.println("Invalid. Try again");
+					if (!isusername) {
+						System.out.println("Invalid input");
 						continue;
 					}
-
 
 					System.out.println(
 							"Enter password : use aplabets and characters from a-z, 0-9. \n It should have atleast 1 Upper case character, 1 Lower case character, 1 special character and 1 digit. MIN LENGTH IS 6 MAX LENGTH IS 20 ");
 					String password = br.readLine();
 					account.setPassword(password);
 					boolean ispassword = valid.validatepassword(password);
-					if (!ispassword)
-					{
+					if (!ispassword) {
 						System.out.println("Invalid. Try again");
 						continue;
 					}
 
 					System.out.println("Deposit Rs : 500 or above as account minimum limit is Rs500");
-					int bal = sc.nextInt();
-					while(true) {
-					if(bal<500)
-					System.out.println("Minimum bal. should be 500");
 
-					else
-						break;
+					while (true) {
+						int bal = sc.nextInt();
+						if (bal < 500)
+							System.out.println("Minimum bal. should be 500");
+
+						else {
+							account.setBalance(bal);
+							break;
+						}
 					}
 					customer.setAge(age);
 					customer.setGender(gender);
 					customer.setPhoneNumber(phoneNumber);
 					account.setAccountNumber(accountNumber);
 					account.setCustomerDetails(customer);
-					account.setBalance(500);
-				
+					
+
 					account.setTrans(list);
 
 					if (isphoneNumber && iscustomerEmail && ispassword && isusername) {
-						
+
 						b = service.createAccount(account);
 						System.out.println("Account Created Successfully");
-						
+
 						System.out.println("Your account number is " + accountNumber);
-					}
-					else {
+					} else {
 						System.out.println("Invalid");
 					}
 					break;
@@ -170,10 +172,10 @@ public class Client {
 							int withdraw = sc.nextInt();
 
 							if (service.withdrawBalance(withdraw, account) != false) {
-								
+
 								System.out.println("Amount Successfuly Withdrawn");
-								
-							} else  {
+
+							} else {
 								System.err.println("Insufficient Funds!");
 							}
 							break;
@@ -181,16 +183,18 @@ public class Client {
 						case 4:
 							System.out.println("Enter the account number to which you want to Trasnfer money");
 							accountNumber = sc.nextLong();
-							if(accountNumber==account.getAccountNumber())
+							if (accountNumber == account.getAccountNumber()) {
 								System.out.println("Donot Enter your account number");
+								break;
+							}
 							service.FundTransfer(accountNumber, account);
-							
+
 							break;
 						case 5:
-							
+
 							service.PrintTransaction(account);
 							break;
-							
+
 						case 6:
 							account = null;
 						}
